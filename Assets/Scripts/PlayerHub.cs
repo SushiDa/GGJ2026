@@ -8,9 +8,9 @@ public class PlayerHub : MonoBehaviour
     internal Action JumpEvent;
     internal Action DashEvent;
     internal Action RollEvent;
-    internal Action RedMaskEvent;
-    internal Action BlueMaskEvent;
-    internal Action YellowMaskEvent;
+    internal Action Mask1Event;
+    internal Action Mask2Event;
+    internal Action Mask3Event;
     internal Action MaskOffEvent;
 
     internal bool canMove = true;

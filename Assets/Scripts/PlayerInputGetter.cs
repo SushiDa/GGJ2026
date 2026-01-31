@@ -44,7 +44,7 @@ public class PlayerInputGetter : MonoBehaviour
     {
         if (value.isPressed)
         {
-            _hub.BlueMaskEvent?.Invoke();
+            _hub.Mask1Event?.Invoke();
         }
     }
 
@@ -52,7 +52,7 @@ public class PlayerInputGetter : MonoBehaviour
     {
         if (value.isPressed)
         {
-            _hub.RedMaskEvent?.Invoke();
+            _hub.Mask2Event?.Invoke();
         }
     }
 
@@ -60,7 +60,7 @@ public class PlayerInputGetter : MonoBehaviour
     {
         if (value.isPressed)
         {
-            _hub.YellowMaskEvent?.Invoke();
+            _hub.Mask3Event?.Invoke();
         }
     }
 
