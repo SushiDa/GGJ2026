@@ -5,12 +5,10 @@ public class PlayerInputGetter : MonoBehaviour
 {
 
     PlayerHub _hub;
-    PlayerInput _playerInput;
 
     private void Awake()
     {
         _hub = GetComponent<PlayerHub>();
-        _playerInput = GetComponent<PlayerInput>();
     }
 
     void OnMove(InputValue value)
@@ -18,19 +16,60 @@ public class PlayerInputGetter : MonoBehaviour
         _hub.InputMovement = value.Get<Vector2>();
     }
 
-    void OnRightStick(InputValue value)
+    void OnJump(InputValue value)
     {
-        // _hub.InputRightStick = value.Get<Vector2>();
+        if (value.isPressed)
+        {
+            _hub.JumpEvent?.Invoke();
+        }
     }
 
-    void OnBtn1(InputValue value)
+    void OnDash(InputValue value)
     {
-        _hub.InputBtn1 = value.isPressed;
+        if (value.isPressed)
+        {
+            _hub.JumpEvent?.Invoke();
+        }
     }
 
-    void OnBtn2(InputValue value)
+    void OnRoll(InputValue value)
     {
-        _hub.InputBtn2 = value.isPressed;
+        if (value.isPressed)
+        {
+            _hub.JumpEvent?.Invoke();
+        }
+    }
+
+    void OnApplyMask1(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            _hub.BlueMaskEvent?.Invoke();
+        }
+    }
+
+    void OnApplyMask2(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            _hub.RedMaskEvent?.Invoke();
+        }
+    }
+
+    void OnApplyMask3(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            _hub.YellowMaskEvent?.Invoke();
+        }
+    }
+
+    void OnRemoveMask(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            _hub.MaskOffEvent?.Invoke();
+        }
     }
 
 }

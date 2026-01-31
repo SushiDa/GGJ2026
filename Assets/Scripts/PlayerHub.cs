@@ -1,11 +1,21 @@
+using System;
 using UnityEngine;
 
 public class PlayerHub : MonoBehaviour
 {
 
     internal Vector2 InputMovement;
-    internal bool InputBtn1;
-    internal bool InputBtn2;
+    internal Action JumpEvent;
+    internal Action DashEvent;
+    internal Action RollEvent;
+    internal Action RedMaskEvent;
+    internal Action BlueMaskEvent;
+    internal Action YellowMaskEvent;
+    internal Action MaskOffEvent;
+
+    internal bool canMove = true;
+    internal bool canJump = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
