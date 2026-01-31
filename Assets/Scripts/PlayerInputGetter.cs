@@ -28,7 +28,7 @@ public class PlayerInputGetter : MonoBehaviour
     {
         if (value.isPressed)
         {
-            _hub.JumpEvent?.Invoke();
+            _hub.DashEvent?.Invoke();
         }
     }
 
@@ -36,7 +36,7 @@ public class PlayerInputGetter : MonoBehaviour
     {
         if (value.isPressed)
         {
-            _hub.JumpEvent?.Invoke();
+            _hub.RollEvent?.Invoke();
         }
     }
 
