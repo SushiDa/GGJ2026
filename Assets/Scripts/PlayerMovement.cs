@@ -116,15 +116,15 @@ public class PlayerMovement : MonoBehaviour
         SFXPlayer.Play("Morph");
         if (_hub.morphForm == true) {
             _hub.morphing = false;
-            _collider.size = new Vector2(1, 0.5f);
+            _collider.size = new Vector2(0.6f, 0.5f);
             _collider.offset = new Vector2(0, 0.25f);
             _hub.morphForm = false;
         }
         else if (_hub.morphForm == false)
         {
             _hub.morphing = true;
-            _collider.size = new Vector2(1, 1);
-            _collider.offset = new Vector2(0, 0.5f);
+            _collider.size = new Vector2(0.6f, 1.5f);
+            _collider.offset = new Vector2(0, 0.75f);
             _hub.morphForm = true;
         }
     }
