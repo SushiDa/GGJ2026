@@ -36,6 +36,7 @@ public class PlayerHub : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckRoof();
         FlipSprite();
         CheckGround();
         ReloadDashing();
@@ -70,5 +71,10 @@ public class PlayerHub : MonoBehaviour
         {
             canMorph = true;
         }
+    }
+    void CheckRoof()
+    {
+        Collider2D getRoof = Physics2D.OverlapBox(transform.position, new Vector2(0.1f, 1f), 0, layerMask);
+       canMorph = getRoof != null;
     }
 }
