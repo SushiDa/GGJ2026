@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
     private void Dashing()
     {
         if (_hub.isDashing) return;
-        if (_hub.canDash == false || !_hub.hasdashAbility) return;
+        if (_hub.canDash == false || !_hub.hasDashAbility) return;
         
         StartCoroutine(Dash());
     }

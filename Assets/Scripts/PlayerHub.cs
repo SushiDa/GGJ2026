@@ -24,7 +24,7 @@ public class PlayerHub : MonoBehaviour
     internal bool morphInProgress = false;
 
     internal bool hasJumpAbility = false;
-    internal bool hasdashAbility = false;
+    internal bool hasDashAbility = false;
 
     [SerializeField] Rigidbody2D _rb;
     public LayerMask layerMask;
@@ -95,7 +95,7 @@ public class PlayerHub : MonoBehaviour
         if (!onGround) return;
         if(GlobalMaskManager.TryAddMask(PrimaryColorMask.MASK_1))
         {
-            hasJumpAbility = true;
+            hasDashAbility = true;
         }
     }
     private void TryApplyMask2()
@@ -103,7 +103,7 @@ public class PlayerHub : MonoBehaviour
         if (!onGround) return;
         if(GlobalMaskManager.TryAddMask(PrimaryColorMask.MASK_2))
         {
-            hasdashAbility = true;
+            hasJumpAbility = true;
         }
 
     }
@@ -126,10 +126,10 @@ public class PlayerHub : MonoBehaviour
             switch(mask)
             {
                 case PrimaryColorMask.MASK_1:
-                    if (GlobalMaskManager.TryRemoveMask()) hasJumpAbility = false;
+                    if (GlobalMaskManager.TryRemoveMask()) hasDashAbility = false;
                     break;
                 case PrimaryColorMask.MASK_2:
-                    if (GlobalMaskManager.TryRemoveMask()) hasdashAbility = false;
+                    if (GlobalMaskManager.TryRemoveMask()) hasJumpAbility = false;
                     break;
                 case PrimaryColorMask.MASK_3:
                     if (!morphInProgress && GlobalMaskManager.TryRemoveMask())
