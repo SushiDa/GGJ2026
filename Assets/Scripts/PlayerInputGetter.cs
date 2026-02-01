@@ -32,14 +32,6 @@ public class PlayerInputGetter : MonoBehaviour
         }
     }
 
-    void OnRoll(InputValue value)
-    {
-        if (value.isPressed)
-        {
-            _hub.RollEvent?.Invoke();
-        }
-    }
-
     void OnApplyMask1(InputValue value)
     {
         if (value.isPressed)

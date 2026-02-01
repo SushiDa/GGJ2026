@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private LevelButton ButtonPrefab;
     [SerializeField] private Transform ButtonHolder;
     [SerializeField] private Image TransitionImage;
+    [SerializeField] private AudioSource MusicSource;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,6 +31,7 @@ public class MainMenu : MonoBehaviour
     public void GoTolevelScene()
     {
         TransitionImage.DOKill();
+        MusicSource.DOFade(0, 0.5f);
         TransitionImage.DOFade(1, .5f).onComplete = () => {
             SceneManager.LoadScene("PlayScene");
         };

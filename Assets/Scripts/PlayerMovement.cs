@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -30,9 +31,10 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (!_hub.isDashing){
-            GravityCheck();
 
             if (!_hub.canMove) return;
+
+            GravityCheck();
 
             Vector2 movement = Vector2.zero;
 
@@ -66,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump()
     {
-        if (!_hub.canJump) return;
+        if (!_hub.hasJumpAbility) return;
         if (_hub.onGround == true && _hub.isDashing == false ) 
         {
             _rb.linearVelocityY = JumpVelocity;
@@ -76,9 +78,9 @@ public class PlayerMovement : MonoBehaviour
     private void Dashing()
     {
         if (_hub.isDashing) return;
-        if (_hub.canDash == false) return;
+        if (_hub.canDash == false || !_hub.hasdashAbility) return;
         
-            StartCoroutine(Dash());
+        StartCoroutine(Dash());
     }
     IEnumerator Dash()
     {
@@ -100,7 +102,16 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnCrawl()
     {
-        if (!_hub.canMorph) return;
+        
+        _hub.morphInProgress = true;
+        _rb.linearVelocityX = 0;
+        _rb.gravityScale = 0;
+        _hub.canMove = false;
+        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() => { 
+            _hub.morphInProgress = false;
+            _hub.canMove = true;
+        });
+
         if (_hub.morphForm == true) {
             _hub.morphing = false;
             _collider.size = new Vector2(1, 0.5f);
