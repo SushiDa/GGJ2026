@@ -24,7 +24,7 @@ public class PlayerHub : MonoBehaviour
     internal bool morphInProgress = false;
 
     internal bool hasJumpAbility = false;
-    internal bool hasdashAbility = false;
+    internal bool hasDashAbility = false;
 
     [SerializeField] Rigidbody2D _rb;
     public LayerMask layerMask;
@@ -88,5 +88,63 @@ public class PlayerHub : MonoBehaviour
         {
             canMorph = true;
         }
+    }*/
+
+
+    private void TryApplyMask1()
+    {
+        if (!onGround) return;
+        if(GlobalMaskManager.TryAddMask(PrimaryColorMask.MASK_1))
+        {
+            hasDashAbility = true;
+        }
     }
+    private void TryApplyMask2()
+    {
+        if (!onGround) return;
+        if(GlobalMaskManager.TryAddMask(PrimaryColorMask.MASK_2))
+        {
+            hasJumpAbility = true;
+        }
+
+    }
+    private void TryApplyMask3()
+    {
+        if (!onGround || morphInProgress) return;
+        bool success = GlobalMaskManager.TryAddMask(PrimaryColorMask.MASK_3);
+        if (success)
+        {
+            morphForm = true;
+            RollEvent?.Invoke();
+        }
+    }
+
+    private void TryMaskOff()
+    {
+        if (!onGround) return;
+        if(GlobalMaskManager.CurrentMaskStack.TryPeek(out var mask))
+        {
+            switch(mask)
+            {
+                case PrimaryColorMask.MASK_1:
+                    if (GlobalMaskManager.TryRemoveMask()) hasDashAbility = false;
+                    break;
+                case PrimaryColorMask.MASK_2:
+                    if (GlobalMaskManager.TryRemoveMask()) hasJumpAbility = false;
+                    break;
+                case PrimaryColorMask.MASK_3:
+                    if (!morphInProgress && GlobalMaskManager.TryRemoveMask())
+                    {
+                        morphForm = false;
+                        RollEvent?.Invoke();
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            GlobalMaskManager.TryRemoveMask();
+        }
+    }
+
 }
