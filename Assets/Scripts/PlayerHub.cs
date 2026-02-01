@@ -18,7 +18,12 @@ public class PlayerHub : MonoBehaviour
     internal bool canJump = true;
     internal bool onGround = false;
     internal bool isDashing = false;
-    
+    internal bool canDash = true;
+    internal bool morphForm = true;
+    internal bool canMorph = true;
+    internal bool morphing = false;
+
+    [SerializeField] Rigidbody2D _rb;
     public LayerMask layerMask;
     [SerializeField] SpriteRenderer renderer;
 
@@ -33,6 +38,8 @@ public class PlayerHub : MonoBehaviour
     {
         FlipSprite();
         CheckGround();
+        ReloadDashing();
+        CheckIsMoving();
     }
 
     void CheckGround()
@@ -44,5 +51,24 @@ public class PlayerHub : MonoBehaviour
     public void FlipSprite()
     {
         renderer.flipX = lookRight;
+    }
+
+    void ReloadDashing()
+    {
+        if (isDashing == false && onGround == true)
+        {
+            canDash = true;
+        }
+    }
+    void CheckIsMoving()
+    {
+        if (_rb.linearVelocityX != 0)
+        {
+            canMorph = false;
+        }
+        else
+        {
+            canMorph = true;
+        }
     }
 }

@@ -35,5 +35,8 @@ public class PlayerAnimator : MonoBehaviour
                 animator.SetBool("isDashing", false);
             }
         }
+        animator.SetBool("isCrawling", !_hub.morphForm);
+        animator.SetFloat("verticalSpeed", _rb.linearVelocityY);
+        animator.SetBool("morphing", _hub.morphing);
     }
 }

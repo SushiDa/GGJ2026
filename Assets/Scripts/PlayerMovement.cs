@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     PlayerHub _hub;
     Rigidbody2D _rb;
+    BoxCollider2D _collider;
 
     [SerializeField] float MoveSpeed;
     [SerializeField] float JumpVelocity;
@@ -12,15 +13,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float FallGravityScale;
     [SerializeField] float DashVelocity;
     [SerializeField] float FallVelocityThreshold;
-    [SerializeField] float DashTimer;
+    [SerializeField] float DashTimer; 
     LayerMask layerMask;
 
     void Awake()
     {
+        _collider = GetComponent<BoxCollider2D>();
         _hub = GetComponent<PlayerHub>();
         _rb = GetComponent<Rigidbody2D>();
 
         _hub.JumpEvent += OnJump;
+        _hub.RollEvent += OnCrawl;
         _hub.DashEvent += Dashing;
     }
 
@@ -63,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump()
     {
-
         if (!_hub.canJump) return;
         if (_hub.onGround == true && _hub.isDashing == false ) 
         {
@@ -74,10 +76,13 @@ public class PlayerMovement : MonoBehaviour
     private void Dashing()
     {
         if (_hub.isDashing) return;
-        StartCoroutine(Dash());
+        if (_hub.canDash == false) return;
+        
+            StartCoroutine(Dash());
     }
     IEnumerator Dash()
     {
+        _hub.canDash = false;
         _hub.isDashing = true;
         _rb.linearVelocityY = 0;
         _rb.gravityScale = 0;
@@ -89,7 +94,25 @@ public class PlayerMovement : MonoBehaviour
             _rb.linearVelocityX = DashVelocity;
         }
         yield return new WaitForSeconds(DashTimer);
-        _hub.isDashing = false;
+        {
+            _hub.isDashing = false;
+        }
     }
-
+    void OnCrawl()
+    {
+        if (!_hub.canMorph) return;
+        if (_hub.morphForm == true) {
+            _hub.morphing = false;
+            _collider.size = new Vector2(1, 0.5f);
+            _collider.offset = new Vector2(0, 0.25f);
+            _hub.morphForm = false;
+        }
+        else if (_hub.morphForm == false)
+        {
+            _hub.morphing = true;
+            _collider.size = new Vector2(1, 1);
+            _collider.offset = new Vector2(0, 0.5f);
+            _hub.morphForm = true;
+        }
+    }
 }
