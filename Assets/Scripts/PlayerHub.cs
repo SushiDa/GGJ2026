@@ -15,18 +15,35 @@ public class PlayerHub : MonoBehaviour
 
     internal bool lookRight = true;
     internal bool canMove = true;
-    internal bool canJump = true;
     internal bool onGround = false;
     internal bool isDashing = false;
     internal bool canDash = true;
     internal bool morphForm = true;
-    internal bool canMorph = true;
+    // internal bool canMorph = true;
     internal bool morphing = false;
+    internal bool morphInProgress = false;
+
+    internal bool hasJumpAbility = false;
+    internal bool hasdashAbility = false;
 
     [SerializeField] Rigidbody2D _rb;
     public LayerMask layerMask;
     [SerializeField] SpriteRenderer renderer;
+    private void Awake()
+    {
+        Mask1Event += TryApplyMask1;
+        Mask2Event += TryApplyMask2;
+        Mask3Event += TryApplyMask3;
+        MaskOffEvent += TryMaskOff;
+    }
 
+    private void OnDestroy()
+    {
+        Mask1Event -= TryApplyMask1;
+        Mask2Event -= TryApplyMask2;
+        Mask3Event -= TryApplyMask3;
+        MaskOffEvent -= TryMaskOff;
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -40,7 +57,7 @@ public class PlayerHub : MonoBehaviour
         FlipSprite();
         CheckGround();
         ReloadDashing();
-        CheckIsMoving();
+        // CheckIsMoving();
     }
 
     void CheckGround()
@@ -61,7 +78,7 @@ public class PlayerHub : MonoBehaviour
             canDash = true;
         }
     }
-    void CheckIsMoving()
+    /*void CheckIsMoving()
     {
         if (_rb.linearVelocityX != 0)
         {
@@ -71,10 +88,5 @@ public class PlayerHub : MonoBehaviour
         {
             canMorph = true;
         }
-    }
-    void CheckRoof()
-    {
-        Collider2D getRoof = Physics2D.OverlapBox(transform.position, new Vector2(0.1f, 1f), 0, layerMask);
-       canMorph = getRoof != null;
     }
 }

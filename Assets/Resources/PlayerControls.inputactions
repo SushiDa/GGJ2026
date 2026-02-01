@@ -34,15 +34,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Roll",
-                    "type": "Button",
-                    "id": "b2dfe4f2-007c-42d6-b139-3b0f8cf6a89e",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ApplyMask1",
                     "type": "Button",
                     "id": "711779ea-4593-410f-9bc3-4b9701f86802",
@@ -302,6 +293,17 @@
                 },
                 {
                     "name": "",
+                    "id": "6dfec10f-873f-4693-8697-6d6fccd8c534",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "ea9a79d8-8ca6-4f0c-9de8-3c070b2814db",
                     "path": "<Keyboard>/j",
                     "interactions": "",
@@ -313,23 +315,12 @@
                 },
                 {
                     "name": "",
-                    "id": "5f06389d-0f01-4bdb-a4ac-a4863cef719a",
-                    "path": "<Gamepad>/leftShoulder",
+                    "id": "b0cdebed-89ae-4ccd-962a-096a43685afe",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Roll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "dce1b0ed-8f3f-475b-ba43-b538e0d9f8e8",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Roll",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -369,7 +360,7 @@
                 {
                     "name": "",
                     "id": "a3ecdb67-24d3-4f55-8431-a93a894305e3",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

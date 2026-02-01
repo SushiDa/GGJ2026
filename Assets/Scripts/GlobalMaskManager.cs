@@ -21,7 +21,7 @@ public class GlobalMaskManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Keyboard.current.digit1Key.wasPressedThisFrame)
+        /*if(Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             TryAddMask(PrimaryColorMask.MASK_1);
         }
@@ -36,7 +36,7 @@ public class GlobalMaskManager : MonoBehaviour
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             TryRemoveMask();
-        }
+        }*/
     }
 
     internal static bool TryAddMask(PrimaryColorMask mask)
