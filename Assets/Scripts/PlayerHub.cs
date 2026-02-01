@@ -53,7 +53,7 @@ public class PlayerHub : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckRoof();
+       // CheckRoof();
         FlipSprite();
         CheckGround();
         ReloadDashing();
