@@ -11,8 +11,7 @@ public class GlobalMaskManager : MonoBehaviour
 
     internal static ColorMask CurrentColorMask;
     internal static Stack<PrimaryColorMask> CurrentMaskStack = new Stack<PrimaryColorMask>();
-
-    [SerializeField] internal List<PrimaryColorMask> AvailableColorMasks = new List<PrimaryColorMask>();
+    internal static List<PrimaryColorMask> AvailableColorMasks = new List<PrimaryColorMask>();
 
     private void Awake()
     {
@@ -40,41 +39,48 @@ public class GlobalMaskManager : MonoBehaviour
         }
     }
 
-    internal bool TryAddMask(PrimaryColorMask mask)
+    internal static bool TryAddMask(PrimaryColorMask mask)
     {
         if (!AvailableColorMasks.Contains(mask) || CurrentMaskStack.Contains(mask) || CurrentMaskStack.Count >= 3)
         {
-            Debug.Log("Can't add mask " + mask);
+            SFXPlayer.Play("No");
             return false;
         }
         CurrentMaskStack.Push(mask);
         CurrentColorMask = ColorMaskCollection.GetColorMask(CurrentMaskStack.ToList());
-        Debug.Log("Mask " + mask + " Added. Current Mask = " + CurrentColorMask);
+        SFXPlayer.Play("Calque");
         Notify();
 
         return true;
     }
 
-    internal bool TryRemoveMask()
+    internal static bool TryRemoveMask()
     {
         if (CurrentMaskStack.TryPop(out var mask))
         {
             CurrentColorMask = ColorMaskCollection.GetColorMask(CurrentMaskStack.ToList());
-            Debug.Log("Mask " + mask + " Removed. Current Mask = " + CurrentColorMask);
+            SFXPlayer.Play("Calque");
             Notify();
             return true;
         }
+        SFXPlayer.Play("No");
         return false;
     }
 
-    private void ResetManager()
+    internal static void SetAvailableMasks(List<PrimaryColorMask> masks)
+    {
+        AvailableColorMasks.Clear();
+        AvailableColorMasks.AddRange(masks);
+    }
+
+    internal static void ResetManager()
     {
         CurrentColorMask = ColorMask.MASK_NONE;
         CurrentMaskStack.Clear();
         Notify();
     }
 
-    private void Notify()
+    private static void Notify()
     {
         GlobalColorChangedEvent?.Invoke(CurrentColorMask);
     }

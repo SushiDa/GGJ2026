@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bffced8a13b8534aa61be4a4f929b07, type: 3}
+  m_Name: Level1
+  m_EditorClassIdentifier: Assembly-CSharp::LevelDefinition
+  LevelIndex: 1
+  LevelName: Tutoriel 1
+  CameraZoom: 8
+  AvailableMasks: 01000000
+  LevelPrefab: {fileID: 4092463154812943679, guid: e2734bc2187d23741b7646e952f34961, type: 3}
