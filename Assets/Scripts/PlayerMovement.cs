@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,7 +10,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float JumpVelocity;
     [SerializeField] float DefaultGravityScale;
     [SerializeField] float FallGravityScale;
+    [SerializeField] float DashVelocity;
     [SerializeField] float FallVelocityThreshold;
+    [SerializeField] float DashTimer;
+    LayerMask layerMask;
 
     void Awake()
     {
@@ -17,24 +21,38 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
 
         _hub.JumpEvent += OnJump;
+        _hub.DashEvent += Dashing;
     }
 
     private void FixedUpdate()
     {
-        GravityCheck();
+        if (!_hub.isDashing){
+            GravityCheck();
 
-        if (!_hub.canMove) return;
+            if (!_hub.canMove) return;
 
-        Vector2 movement = Vector2.zero;
+            Vector2 movement = Vector2.zero;
 
-        Vector2 horizontalMovement = _hub.InputMovement.x * Vector2.right;
-        //if (_hub.InputMovement.magnitude > .1f && _hub.canMove && !LockStrafe)
-        if (_hub.InputMovement.magnitude >= .05f)
-        {
-            movement = horizontalMovement.normalized * MoveSpeed;
+            Vector2 horizontalMovement = _hub.InputMovement.x * Vector2.right;
+            //if (_hub.InputMovement.magnitude > .1f && _hub.canMove && !LockStrafe)
+            if (_hub.InputMovement.magnitude >= .05f)
+            {
+                movement = horizontalMovement.normalized * MoveSpeed;
+            }
+            if (movement.x < 0)
+            {
+                _hub.lookRight = false;
+            }
+            else if (movement.x >0)
+            {
+                _hub.lookRight = true;
+            }
+                _rb.linearVelocityX = movement.x;
         }
-
-        _rb.linearVelocityX = movement.x;
+        else
+        {
+            Dashing();
+        }
     }
 
 
@@ -45,8 +63,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump()
     {
-        if (!_hub.canJump) return;
-        _rb.linearVelocityY = JumpVelocity;
 
+        if (!_hub.canJump) return;
+        if (_hub.onGround == true && _hub.isDashing == false ) 
+        {
+            _rb.linearVelocityY = JumpVelocity;
+        }
     }
+
+    private void Dashing()
+    {
+        if (_hub.isDashing) return;
+        StartCoroutine(Dash());
+    }
+    IEnumerator Dash()
+    {
+        _hub.isDashing = true;
+        _rb.linearVelocityY = 0;
+        _rb.gravityScale = 0;
+        if (_hub.lookRight == false)
+        {
+            _rb.linearVelocityX = DashVelocity * -1;
+        }
+        else { 
+            _rb.linearVelocityX = DashVelocity;
+        }
+        yield return new WaitForSeconds(DashTimer);
+        _hub.isDashing = false;
+    }
+
 }

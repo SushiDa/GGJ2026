@@ -13,18 +13,36 @@ public class PlayerHub : MonoBehaviour
     internal Action Mask3Event;
     internal Action MaskOffEvent;
 
+    internal bool lookRight = true;
     internal bool canMove = true;
     internal bool canJump = true;
+    internal bool onGround = false;
+    internal bool isDashing = false;
+    
+    public LayerMask layerMask;
+    [SerializeField] SpriteRenderer renderer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        FlipSprite();
+        CheckGround();
+    }
+
+    void CheckGround()
+    {
+        Collider2D getGround = Physics2D.OverlapBox(transform.position, new Vector2(0.25f, 0.1f), 0, layerMask);
+        onGround = getGround != null;
+    }
+
+    public void FlipSprite()
+    {
+        renderer.flipX = lookRight;
     }
 }
