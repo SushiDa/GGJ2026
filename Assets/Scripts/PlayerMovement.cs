@@ -71,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
         if (!_hub.hasJumpAbility) return;
         if (_hub.onGround == true && _hub.isDashing == false ) 
         {
+            SFXPlayer.Play(_hub.morphForm? "Jump" : "SlimeJump");
             _rb.linearVelocityY = JumpVelocity;
         }
     }
@@ -79,7 +80,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_hub.isDashing) return;
         if (_hub.canDash == false || !_hub.hasDashAbility) return;
-        
+
+        SFXPlayer.Play("Dash");
         StartCoroutine(Dash());
     }
     IEnumerator Dash()
@@ -111,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
             _hub.morphInProgress = false;
             _hub.canMove = true;
         });
-
+        SFXPlayer.Play("Morph");
         if (_hub.morphForm == true) {
             _hub.morphing = false;
             _collider.size = new Vector2(1, 0.5f);
